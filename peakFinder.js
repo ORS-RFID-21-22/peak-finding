@@ -4,21 +4,22 @@
 // stdDevs is the number of standard deviations for peak detection cutoff
 // (e.g. if stdDevs is set to 4, then any "peaks" less than mean + 4*std is not considered a peak)
 function findPeaks(arr, numPeaks, stdDevs) {
-    var peaks = Array.apply(null, Array(numPeaks)).map(function () { return {x: 0, y: 0} });
+    var peaks = []
     var stats = stats(arr);
-    threshold = stats.avg + stdDevs * stats.std;
+    var threshold = stats.avg + stdDevs * stats.std;
     console.log(stats.avg, stats.std, threshold);
     for (var i = 1; i < arr.length-1; i++) {
         if (arr[i] > threshold && arr[i-1] < arr[i] && arr[i] > arr[i+1]) {
-            var min = peaks.map(function(a) { return a.y; })
-                            .reduce((a, b) => Math.min(a, b));
-            if (arr[i] > min) {
-                for (var j = 0; j < numPeaks; j++) {
-                    if (peaks[j].y == min) {
-                        peaks[j].x = i;
-                        peaks[j].y = arr[i];
-                        break;
-                    }
+            if (peaks.length < numPeaks) {
+                peaks.push({x: i, y: arr[i]});
+            } else {
+                var min = peaks[0].y;
+                for (var j = 1; j < peaks.length; j++) {
+                    if (peaks[j].y < min) min = peaks[j].y;
+                }
+                if (arr[i] > min) {
+                    peaks[j].x = i;
+                    peaks[j].y = arr[i];
                 }
             }
         }
