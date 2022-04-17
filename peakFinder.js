@@ -170,8 +170,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
             findPeaksSameWindow(
                 rp_two_tags[i], 
                 2,
-                [[100, 200], [315, 415]], 
-                2
+                [[100, 200], [315, 415]]
             ), 
             "#original-data"
         );
